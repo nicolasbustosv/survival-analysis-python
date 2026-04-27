@@ -20,10 +20,11 @@ def _percentile_survival(
     Returns DataFrame with columns: percentile, time_estimate.
     """
     sf = cph.baseline_survival_
+    surv_col = sf.columns[0]  # lifelines column name may vary across versions
     records = []
     for q in percentiles:
         surv_level = 1.0 - q
-        crossed = sf[sf["baseline survival"] <= surv_level]
+        crossed = sf[sf[surv_col] <= surv_level]
         if not crossed.empty:
             t = crossed.index[0]
         else:

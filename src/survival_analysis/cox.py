@@ -130,7 +130,7 @@ def backward_aic(
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
 
-        full_df = df[current + [duration_col, event_col]].copy()
+        full_df = df[current + [duration_col, event_col]].dropna()
         base_cph = fit_cox(full_df, duration_col, event_col)
         current_aic = _compute_aic(base_cph)
         current_model = base_cph

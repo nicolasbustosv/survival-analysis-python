@@ -163,12 +163,16 @@ def range_normalize(
     duration_col: str = DURATION_COL,
     event_col: str = EVENT_COL,
 ) -> pd.DataFrame:
-    """MinMax-scale numeric columns (excluding duration and event)."""
+    """MinMax-scale numeric columns (excluding duration and event).
+
+    Columns with zero variance (min == max) are skipped; scaling them
+    would produce NaN via division by zero.
+    """
     df = df.copy()
     skip = {duration_col, event_col}
     num_cols = [
         c for c in df.select_dtypes(include="number").columns
-        if c not in skip
+        if c not in skip and df[c].min() != df[c].max()
     ]
     if not num_cols:
         return df

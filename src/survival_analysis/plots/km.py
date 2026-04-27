@@ -19,7 +19,7 @@ def plot_km(
     event_col: str = EVENT_COL,
     *,
     figsize_cm: tuple[float, float] = (12, 10),
-    pval_coord: tuple[float, float] = (1500, 0.55),
+    pval_coord: tuple[float, float] | None = None,
     legend_loc: tuple[float, float] | str = (0.78, 0.78),
     ylim: tuple[float, float] = (0, 1),
     title: str = "",
@@ -31,6 +31,10 @@ def plot_km(
     cm = 1 / 2.54
     w, h = figsize_cm
     fig, ax = plt.subplots(figsize=(w * cm, h * cm))
+
+    # Default p-value annotation: 70% of x-range, mid-survival
+    if pval_coord is None:
+        pval_coord = (df[duration_col].max() * 0.70, 0.55)
 
     # Log-rank p-value
     groups = df[factor_col].dropna()
