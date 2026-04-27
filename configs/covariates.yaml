@@ -228,10 +228,11 @@ models:
       - "masked"
       - primary_purpose
     final_covariates:
-      n_countries:       "Number of countries"
-      lead_agency:       "Lead agency"
-      intervention_type: "Intervention type"
-      Breakthrough:      "Breakthrough"
+      n_countries:          "Number of countries"
+      lead_agency:          "Lead agency"
+      intervention_type:    "Intervention type"
+      Breakthrough:         "Breakthrough"
+      n_secondary_endpoint: "Number of secondary endpoints"
     forest:
       filename: "ggforest_ID_P3"
       height: 5

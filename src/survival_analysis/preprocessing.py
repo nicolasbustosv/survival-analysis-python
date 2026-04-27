@@ -51,28 +51,33 @@ def apply_global_renames(df: pd.DataFrame, cfg: Config) -> pd.DataFrame:
 
 
 def _bin_endpoints(df: pd.DataFrame) -> pd.DataFrame:
+    # The CSV produced by R already contains pre-binned string labels
+    # ("1-2", "3-7", etc.). Skip rebinning when pd.to_numeric returns all-NaN,
+    # which means the column is already in string form.
     df = df.copy()
     if "n_primary_endpoint" in df.columns:
         col = pd.to_numeric(df["n_primary_endpoint"], errors="coerce")
-        df["n_primary_endpoint"] = np.where(col > 4, ">4", "1-3")
+        if col.notna().any():
+            df["n_primary_endpoint"] = np.where(col > 4, ">4", "1-3")
 
     if "n_secondary_endpoint" in df.columns:
         col = pd.to_numeric(df["n_secondary_endpoint"], errors="coerce")
-        bins = []
-        for v in col:
-            if pd.isna(v):
-                bins.append(np.nan)
-            elif v > 20:
-                bins.append(">20")
-            elif v >= 14:
-                bins.append("14-20")
-            elif v >= 8:
-                bins.append("8-13")
-            elif v >= 3:
-                bins.append("3-7")
-            else:
-                bins.append("1-2")
-        df["n_secondary_endpoint"] = bins
+        if col.notna().any():
+            bins = []
+            for v in col:
+                if pd.isna(v):
+                    bins.append(np.nan)
+                elif v > 20:
+                    bins.append(">20")
+                elif v >= 14:
+                    bins.append("14-20")
+                elif v >= 8:
+                    bins.append("8-13")
+                elif v >= 3:
+                    bins.append("3-7")
+                else:
+                    bins.append("1-2")
+            df["n_secondary_endpoint"] = bins
 
     return df
 
