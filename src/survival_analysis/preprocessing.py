@@ -12,10 +12,12 @@ from typing import Any
 # Global level renames  (ported from sensibility_analysis.R L322-387)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def apply_global_renames(df: pd.DataFrame, cfg: dict[str, Any]) -> pd.DataFrame:
+def apply_global_renames(df: pd.DataFrame, cfg: Any) -> pd.DataFrame:
     """Apply global level renames from covariates.yaml global.level_renames."""
     df = df.copy()
-    renames = cfg.get("global", {}).get("level_renames", {})
+    # Accept either a Config object (has .global_cfg) or a plain dict
+    global_cfg = cfg.global_cfg if hasattr(cfg, "global_cfg") else cfg.get("global", {})
+    renames = global_cfg.get("level_renames", {})
 
     for col, mapping in renames.items():
         if col not in df.columns:
@@ -29,10 +31,12 @@ def apply_global_renames(df: pd.DataFrame, cfg: dict[str, Any]) -> pd.DataFrame:
         else:
             df[col] = df[col].replace(mapping)
 
-    # Masking consolidation (R L69-76)
-    masking_renames = cfg.get("global", {}).get("masking_renames", {})
-    if "masking" in df.columns and masking_renames:
-        df["masking"] = df["masking"].replace(masking_renames)
+    # Masking consolidation (R L69-76) — also fills actual NaN → "None"
+    masking_renames = global_cfg.get("masking_renames", {})
+    if "masking" in df.columns:
+        if masking_renames:
+            df["masking"] = df["masking"].replace(masking_renames)
+        df["masking"] = df["masking"].fillna("None").replace("nan", "None").replace("NA", "None")
 
     # FDA designations: replace NaN with "No" (R L317-321)
     for col in ["Fast_Track", "Orphan", "Breakthrough", "RMAT", "QIDP"]:
@@ -141,7 +145,6 @@ def apply_subset_rules(
             cols_to_drop = [c for c in df.columns if pattern in c]
             df = df.drop(columns=cols_to_drop, errors="ignore")
 
-    df = df.dropna()
     return df
 
 

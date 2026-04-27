@@ -79,7 +79,7 @@ def _run_model(
     save_figure(fig, fdir / label)
     import matplotlib.pyplot as plt
     plt.close(fig)
-    print(f"  [{model_key}] forest plot saved → {label}.*")
+    print(f"  [{model_key}] forest plot saved -> {label}.*")
 
     return summ
 
@@ -113,7 +113,7 @@ def main(argv: list[str] | None = None) -> None:
     if summaries:
         out_path = tables_dir / "cox_summaries.xlsx"
         write_xlsx(summaries, out_path)
-        print(f"\nCox summaries written → {out_path}")
+        print(f"\nCox summaries written -> {out_path}")
     else:
         print("\nNo models produced output.")
 

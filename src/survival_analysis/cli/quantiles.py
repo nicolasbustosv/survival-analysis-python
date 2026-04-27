@@ -1,4 +1,4 @@
-"""CLI: quantile survival summaries → quantile_models.xlsx."""
+"""CLI: quantile survival summaries -> quantile_models.xlsx."""
 from __future__ import annotations
 
 import argparse
@@ -62,7 +62,7 @@ def main(argv: list[str] | None = None) -> None:
 
     out_path = tables_dir / "quantile_models.xlsx"
     write_xlsx(tables, out_path)
-    print(f"Quantile models written → {out_path}")
+    print(f"Quantile models written -> {out_path}")
 
 
 if __name__ == "__main__":

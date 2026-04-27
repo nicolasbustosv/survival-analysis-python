@@ -33,7 +33,7 @@ def _prep_for_lifelines(
     str_cat_cols = [c for c in cat_cols if c not in bool_cols]
 
     out = df.copy()
-    # Bool → int (0/1): no dummies needed
+    # Bool -> int (0/1): no dummies needed
     for c in bool_cols:
         out[c] = out[c].astype(int)
 

@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None) -> None:
     save_figure(fig3, out_dir / "endpoint_distributions")
     plt.close(fig3)
 
-    print(f"Cluster plots saved → {out_dir}")
+    print(f"Cluster plots saved -> {out_dir}")
 
 
 if __name__ == "__main__":

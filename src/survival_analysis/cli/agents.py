@@ -38,12 +38,12 @@ def main(argv: list[str] | None = None) -> None:
     fig1 = plot_agents_separately(separate)
     save_figure(fig1, agents_dir / "agents_separately")
     plt.close(fig1)
-    print("Saved → agents_separately.*")
+    print("Saved -> agents_separately.*")
 
     fig2 = plot_agent_combinations(cph_combos, combos_df)
     save_figure(fig2, agents_dir / "agent_combinations")
     plt.close(fig2)
-    print("Saved → agent_combinations.*")
+    print("Saved -> agent_combinations.*")
 
 
 if __name__ == "__main__":

@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None) -> None:
         with PdfPages(str(pdf_path)) as pdf:
             pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
-        print(f"  [{model}] saved → hr_sensitivity_{safe_name}.*")
+        print(f"  [{model}] saved -> hr_sensitivity_{safe_name}.*")
 
     # Consolidated PDFs by duration bucket (5yr / 10yr) matching R output names
     for bucket_label, duration_tag in [("5 years", "ggforest_5_years"), ("10 years", "ggforest_10_years")]:
@@ -60,7 +60,7 @@ def main(argv: list[str] | None = None) -> None:
                 fig = plot_hr_sensitivity(hr_df, model_filter=m)
                 pdf.savefig(fig, bbox_inches="tight")
                 plt.close(fig)
-        print(f"Consolidated PDF → {duration_tag}.pdf")
+        print(f"Consolidated PDF -> {duration_tag}.pdf")
 
 
 if __name__ == "__main__":

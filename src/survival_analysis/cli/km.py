@@ -30,10 +30,18 @@ def main(argv: list[str] | None = None) -> None:
     km_dir.mkdir(parents=True, exist_ok=True)
 
     km_cfg = cfg.km_cfg
-    stratifications = km_cfg.get("stratifications", [])
+    # Combine main stratifications + industry variants
+    all_strats = list(km_cfg.get("stratifications", []))
+    for strat in km_cfg.get("industry_stratifications", []):
+        s = dict(strat)
+        s.setdefault("subset_col", "lead_agency")
+        s.setdefault("subset_val", "Industry")
+        all_strats.append(s)
 
-    for strat in stratifications:
-        factor_col  = strat["factor_col"]
+    for strat in all_strats:
+        factor_col  = strat.get("factor_col") or strat.get("col")
+        if not factor_col:
+            continue
         label       = strat.get("label", factor_col)
         title       = strat.get("title", label)
         pval_coord  = strat.get("pval_coord", [1500, 0.55])
@@ -64,7 +72,7 @@ def main(argv: list[str] | None = None) -> None:
         )
         save_figure(fig, km_dir / filename)
         plt.close(fig)
-        print(f"  [km] saved → {filename}.*")
+        print(f"  [km] saved -> {filename}.*")
 
 
 if __name__ == "__main__":

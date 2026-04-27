@@ -31,11 +31,13 @@ def boxplot_by_disease_group(
         data=sub,
         x=group_col,
         y=duration_col,
+        hue=group_col,
         palette=palette,
         order=groups,
         width=0.5,
         linewidth=0.8,
         fliersize=2,
+        legend=False,
         ax=ax,
     )
 
