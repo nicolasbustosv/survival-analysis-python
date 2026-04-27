@@ -18,13 +18,14 @@ from lifelines import CoxPHFitter
 from typing import Any
 
 from .style import JCO_PALETTE, set_publication_style
+from .._constants import DURATION_COL, EVENT_COL
 
 
 def _get_forest_rows(
     cph: CoxPHFitter,
     data: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
 ) -> list[dict]:
     """Build row records from fitted model for forest plot rendering."""
     rows = []
@@ -126,8 +127,8 @@ def plot_forest(
     data: pd.DataFrame,
     *,
     title: str = "",
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
     figsize: tuple[float, float] = (8, 5),
     fontsize: float = 8,
     palette: list[str] | None = None,

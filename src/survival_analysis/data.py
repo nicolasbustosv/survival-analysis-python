@@ -33,8 +33,6 @@ def _apply_string_types(df: pd.DataFrame) -> pd.DataFrame:
     str_cols = df.select_dtypes(include="object").columns
     for col in str_cols:
         df[col] = df[col].astype(str).str.strip()
-        # Normalize TRUE/FALSE strings that came through R
-        df[col] = df[col].replace({"TRUE": "TRUE", "FALSE": "FALSE"})
     return df
 
 

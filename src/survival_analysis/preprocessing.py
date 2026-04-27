@@ -1,22 +1,23 @@
 """Data preprocessing: level renames, subsets, normalization, factor encoding."""
 from __future__ import annotations
 
-import re
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from typing import Any
+
+from ._constants import DURATION_COL, EVENT_COL
+from .config import Config
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Global level renames  (ported from sensibility_analysis.R L322-387)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def apply_global_renames(df: pd.DataFrame, cfg: Any) -> pd.DataFrame:
+def apply_global_renames(df: pd.DataFrame, cfg: Config) -> pd.DataFrame:
     """Apply global level renames from covariates.yaml global.level_renames."""
     df = df.copy()
-    # Accept either a Config object (has .global_cfg) or a plain dict
-    global_cfg = cfg.global_cfg if hasattr(cfg, "global_cfg") else cfg.get("global", {})
+    global_cfg = cfg.global_cfg
     renames = global_cfg.get("level_renames", {})
 
     for col, mapping in renames.items():
@@ -154,8 +155,8 @@ def apply_subset_rules(
 
 def range_normalize(
     df: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
 ) -> pd.DataFrame:
     """MinMax-scale numeric columns (excluding duration and event)."""
     df = df.copy()
@@ -178,8 +179,8 @@ def range_normalize(
 def rename_for_plot(
     df: pd.DataFrame,
     final_covariates: dict[str, str],
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
 ) -> tuple[pd.DataFrame, list[str]]:
     """Keep only final covariates + duration/event; rename to human-readable."""
     keep_raw = list(final_covariates.keys())

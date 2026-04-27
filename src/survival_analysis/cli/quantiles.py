@@ -9,16 +9,7 @@ from ..data import load_complemented
 from ..preprocessing import apply_global_renames, apply_subset_rules, range_normalize
 from ..quantiles import build_quantile_tables
 from ..io import write_xlsx
-
-
-MODEL_KEYS = [
-    "oncology_phase2",
-    "oncology_phase3",
-    "infectious_phase2",
-    "infectious_phase3",
-    "cardiovascular_phase2",
-    "cardiovascular_phase3",
-]
+from ._models import MODEL_KEYS
 
 
 def main(argv: list[str] | None = None) -> None:

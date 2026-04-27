@@ -5,11 +5,14 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 from lifelines import CoxPHFitter
+
+import warnings
 
 from .cox import fit_cox, cox_summary
 from .plots.style import JCO_PALETTE, set_publication_style
+from ._constants import DURATION_COL, EVENT_COL
+from lifelines.exceptions import ConvergenceError
 
 
 AGENT_COLS = {
@@ -33,7 +36,7 @@ def prepare_phase3_onco(df: pd.DataFrame) -> pd.DataFrame:
         (df["phase"] == "Phase 3") &
         (df["Disease_Group"] == "Oncology") &
         (df["intervention_model"] != "NA")
-    ][["duration", "event"] + list(AGENT_COLS.keys())].copy()
+    ][[DURATION_COL, EVENT_COL] + list(AGENT_COLS.keys())].copy()
     sub = sub.rename(columns=AGENT_COLS)
     for col in AGENT_COLS.values():
         sub[col] = _to_bool(sub[col])
@@ -44,15 +47,15 @@ def _fit_separate_agents(agents_df: pd.DataFrame) -> dict[str, pd.DataFrame]:
     """One Cox per agent (Subject, Care_provider, Investigator, Outcome_assessor)."""
     results = {}
     for col in AGENT_COLS.values():
-        sub = agents_df[["duration", "event", col]].copy()
+        sub = agents_df[[DURATION_COL, EVENT_COL, col]].copy()
         # Convert bool to categorical True/False for readable forest plot
         sub[col] = sub[col].map({True: "True", False: "False"})
         try:
-            cph = fit_cox(sub, duration_col="duration", event_col="event")
+            cph = fit_cox(sub, duration_col=DURATION_COL, event_col=EVENT_COL)
             results[col] = cox_summary(cph)
             results[col]["variable"] = col
-        except Exception:
-            pass
+        except (ConvergenceError, np.linalg.LinAlgError, ValueError) as exc:
+            warnings.warn(f"agent fit skipped for {col!r}: {type(exc).__name__}")
     return results
 
 
@@ -77,7 +80,7 @@ def _make_combinations(agents_df: pd.DataFrame) -> pd.DataFrame:
         df["Combination"],
         categories=["Other", "S_I", "S_C_I", "S_C_I_O"],
     )
-    return df[["duration", "event", "Combination"]]
+    return df[[DURATION_COL, EVENT_COL, "Combination"]]
 
 
 def run_agent_analysis(
@@ -89,7 +92,7 @@ def run_agent_analysis(
     separate = _fit_separate_agents(agents_df)
 
     combos_df = _make_combinations(agents_df)
-    cph_combos = fit_cox(combos_df, duration_col="duration", event_col="event")
+    cph_combos = fit_cox(combos_df, duration_col=DURATION_COL, event_col=EVENT_COL)
 
     return separate, cph_combos, combos_df
 

@@ -9,13 +9,14 @@ from lifelines import KaplanMeierFitter
 from lifelines.statistics import multivariate_logrank_test
 
 from .style import jco_colors, set_publication_style
+from .._constants import DURATION_COL, EVENT_COL
 
 
 def plot_km(
     df: pd.DataFrame,
     factor_col: str,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
     *,
     figsize_cm: tuple[float, float] = (12, 10),
     pval_coord: tuple[float, float] = (1500, 0.55),

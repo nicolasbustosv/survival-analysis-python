@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import pandas as pd
 
 from ..config import load_config
@@ -12,25 +13,7 @@ from ..preprocessing import apply_global_renames, apply_subset_rules, range_norm
 from ..cox import fit_cox, cox_summary, univariate_screen, backward_aic
 from ..plots.forest import plot_forest
 from ..io import save_figure, write_xlsx
-
-
-MODEL_KEYS = [
-    "oncology_phase2",
-    "oncology_phase3",
-    "infectious_phase2",
-    "infectious_phase3",
-    "cardiovascular_phase2",
-    "cardiovascular_phase3",
-]
-
-FOREST_LABELS = {
-    "oncology_phase2":      "ggforest_O_P2",
-    "oncology_phase3":      "ggforest_O_P3",
-    "infectious_phase2":    "ggforest_ID_P2",
-    "infectious_phase3":    "ggforest_ID_P3",
-    "cardiovascular_phase2":"ggforest_C_P2",
-    "cardiovascular_phase3":"ggforest_C_P3",
-}
+from ._models import MODEL_KEYS, FOREST_LABELS
 
 
 def _run_model(
@@ -77,7 +60,6 @@ def _run_model(
         figsize=tuple(model_cfg.get("forest", {}).get("figsize", [8, 6])),
     )
     save_figure(fig, fdir / label)
-    import matplotlib.pyplot as plt
     plt.close(fig)
     print(f"  [{model_key}] forest plot saved -> {label}.*")
 

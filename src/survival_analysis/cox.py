@@ -5,8 +5,10 @@ import warnings
 import numpy as np
 import pandas as pd
 from lifelines import CoxPHFitter
+from lifelines.exceptions import ConvergenceError
 from statsmodels.stats.outliers_influence import variance_inflation_factor
-from typing import Any
+
+from ._constants import DURATION_COL, EVENT_COL
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -15,8 +17,8 @@ from typing import Any
 
 def _prep_for_lifelines(
     df: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
 ) -> pd.DataFrame:
     """Expand categorical/string columns to dummies (treatment contrasts, drop_first).
 
@@ -47,8 +49,8 @@ def _prep_for_lifelines(
 
 def fit_cox(
     df: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
     formula: str | None = None,
     penalizer: float = 0.0,
 ) -> CoxPHFitter:
@@ -82,8 +84,8 @@ def cox_summary(cph: CoxPHFitter) -> pd.DataFrame:
 
 def univariate_screen(
     df: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
     p_threshold: float = 0.1,
 ) -> list[str]:
     """Return variable names where any level has p ≤ p_threshold in univariate Cox."""
@@ -97,8 +99,8 @@ def univariate_screen(
             cph = fit_cox(subset, duration_col=duration_col, event_col=event_col)
             if (cph.summary["p"] <= p_threshold).any():
                 significant.append(col)
-        except Exception:
-            pass
+        except (ConvergenceError, np.linalg.LinAlgError, ValueError) as exc:
+            warnings.warn(f"univariate fit skipped for {col!r}: {type(exc).__name__}")
     return significant
 
 
@@ -113,26 +115,11 @@ def _compute_aic(cph: CoxPHFitter) -> float:
     return -2 * ll + 2 * k
 
 
-def _get_categorical_groups(df: pd.DataFrame, covariates: list[str]) -> dict[str, list[str]]:
-    """Map each original variable name to the dummy column names it expands into.
-
-    For a numeric column, the group is just [col_name].
-    For a categorical column, we track it as a group so the whole factor is
-    dropped or kept together (matching R's selectCox behaviour).
-    """
-    groups: dict[str, list[str]] = {}
-    for col in covariates:
-        if df[col].dtype == object or str(df[col].dtype) == "category":
-            groups[col] = [col]
-        else:
-            groups[col] = [col]
-    return groups
-
 
 def backward_aic(
     df: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
     max_iter: int = 100,
 ) -> tuple[CoxPHFitter, list[str]]:
     """Backward AIC elimination, dropping whole variables at each step.
@@ -150,12 +137,9 @@ def backward_aic(
         warnings.simplefilter("ignore")
 
         full_df = df[current + [duration_col, event_col]].copy()
-        try:
-            base_cph = fit_cox(full_df, duration_col, event_col)
-            current_aic = _compute_aic(base_cph)
-            current_model = base_cph
-        except Exception:
-            return CoxPHFitter(), current
+        base_cph = fit_cox(full_df, duration_col, event_col)
+        current_aic = _compute_aic(base_cph)
+        current_model = base_cph
 
         for _ in range(max_iter):
             best_aic = current_aic
@@ -174,7 +158,8 @@ def backward_aic(
                         best_aic = aic
                         best_drop = col
                         best_model = cph
-                except Exception:
+                except (ConvergenceError, np.linalg.LinAlgError, ValueError) as exc:
+                    warnings.warn(f"backward AIC drop skipped for {col!r}: {type(exc).__name__}")
                     continue
 
             if best_drop is None:
@@ -192,8 +177,8 @@ def backward_aic(
 
 def vif_table(
     df: pd.DataFrame,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
 ) -> pd.DataFrame:
     """Compute VIF for numeric covariates. Returns DataFrame with vif and gen_r2."""
     num_cols = [
@@ -209,6 +194,7 @@ def vif_table(
         try:
             v = variance_inflation_factor(X.values, i)
             rows.append({"variable": col, "vif": v, "gen_r2": 1 - 1 / v})
-        except Exception:
+        except (np.linalg.LinAlgError, ValueError) as exc:
+            warnings.warn(f"VIF skipped for {col!r}: {type(exc).__name__}")
             rows.append({"variable": col, "vif": np.nan, "gen_r2": np.nan})
     return pd.DataFrame(rows)

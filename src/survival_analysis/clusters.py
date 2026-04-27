@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from .plots.style import JCO_PALETTE, set_publication_style
+from ._constants import DURATION_COL
 
 
 def boxplot_by_disease_group(
     df: pd.DataFrame,
-    duration_col: str = "duration",
+    duration_col: str = DURATION_COL,
     group_col: str = "Disease_Group",
     *,
     figsize: tuple[float, float] = (8, 5),
@@ -66,7 +67,7 @@ def boxplot_by_disease_group(
 
 def boxplot_without_oncology(
     df: pd.DataFrame,
-    duration_col: str = "duration",
+    duration_col: str = DURATION_COL,
     group_col: str = "Disease_Group",
     *,
     figsize: tuple[float, float] = (8, 5),

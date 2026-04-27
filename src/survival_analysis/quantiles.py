@@ -5,7 +5,10 @@ import numpy as np
 import pandas as pd
 from lifelines import CoxPHFitter
 
+from lifelines.exceptions import ConvergenceError
+
 from .cox import fit_cox, cox_summary
+from ._constants import DURATION_COL, EVENT_COL
 
 
 def _percentile_survival(
@@ -32,10 +35,10 @@ def _percentile_survival(
 def quantile_summary(
     df: pd.DataFrame,
     model_name: str,
-    duration_col: str = "duration",
-    event_col: str = "event",
+    duration_col: str = DURATION_COL,
+    event_col: str = EVENT_COL,
     percentiles: tuple[float, ...] = (0.25, 0.50, 0.75),
-) -> pd.DataFrame:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Fit Cox on df, extract HR table + baseline percentile estimates.
     Returns a combined DataFrame tagged with model_name.
@@ -73,8 +76,8 @@ def build_quantile_tables(
             hr_df, pct_df = quantile_summary(df, model_name=name)
             hr_rows.append(hr_df)
             pct_rows.append(pct_df)
-        except Exception as exc:
-            print(f"  [quantiles] {name}: skipped — {exc}")
+        except (ConvergenceError, np.linalg.LinAlgError, ValueError) as exc:
+            print(f"  [quantiles] {name}: skipped - {exc}")
 
     hr_table = pd.concat(hr_rows, ignore_index=True) if hr_rows else pd.DataFrame()
     pct_table = pd.concat(pct_rows, ignore_index=True) if pct_rows else pd.DataFrame()
