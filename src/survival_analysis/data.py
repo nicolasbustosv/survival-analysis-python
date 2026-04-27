@@ -30,6 +30,13 @@ def load_complemented(path: str | Path) -> pd.DataFrame:
 
 def _apply_string_types(df: pd.DataFrame) -> pd.DataFrame:
     """Strip whitespace from string columns and convert bool-like values."""
+    # Bool columns (pandas reads "TRUE"/"FALSE" CSV cells as Python bool).
+    # Convert to "TRUE"/"FALSE" strings so YAML level_renames/level_collapses
+    # can compare against string values like __keep_only__: "TRUE".
+    bool_cols = df.select_dtypes(include="bool").columns
+    for col in bool_cols:
+        df[col] = df[col].map({True: "TRUE", False: "FALSE"})
+
     str_cols = df.select_dtypes(include="object").columns
     for col in str_cols:
         df[col] = df[col].astype(str).str.strip()

@@ -66,14 +66,25 @@ def _get_forest_rows(
                 "is_ref": True,
             })
             for level in levels[1:]:
-                # Find matching row in summary using partial name match
-                pattern = re.escape(str(cov)) + r".*" + re.escape(str(level))
-                matches = [
-                    idx for idx in summary.index
-                    if re.search(pattern, str(idx), re.IGNORECASE)
-                    or str(idx) == f"{cov}[T.{level}]"
-                    or str(idx).endswith(str(level))
-                ]
+                # Prefer the exact dummy-column name produced by pd.get_dummies.
+                # Falls back to patsy-style then partial match only when exact
+                # lookup fails — avoids false matches when two variables share
+                # the same level name (e.g. "Yes" for Orphan and QIDP).
+                dummy_name = f"{cov}_{level}"
+                if dummy_name in summary.index:
+                    matches = [dummy_name]
+                else:
+                    pattern = re.escape(str(cov)) + r".*" + re.escape(str(level))
+                    matches = [
+                        idx for idx in summary.index
+                        if re.search(pattern, str(idx), re.IGNORECASE)
+                        or str(idx) == f"{cov}[T.{level}]"
+                    ]
+                    if not matches:
+                        matches = [
+                            idx for idx in summary.index
+                            if str(idx).endswith(str(level))
+                        ]
                 if matches:
                     row_key = matches[0]
                     hr = summary.loc[row_key, "exp(coef)"]
