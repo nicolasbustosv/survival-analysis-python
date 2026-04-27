@@ -1,0 +1,35 @@
+# JCO color palette (matches ggsci jco)
+jco_palette:
+  - "#0073C2"
+  - "#EFC000"
+  - "#868686"
+  - "#CD534C"
+  - "#7AA6DC"
+  - "#003C67"
+  - "#8F7700"
+  - "#3B3B3B"
+  - "#A73030"
+  - "#4A6990"
+
+publication:
+  font_family: "DejaVu Sans"
+  font_size: 9
+  axes_labelsize: 10
+  title_fontsize: 10
+  dpi: 300
+
+forest:
+  ref_line_color: "black"
+  ref_line_lw: 1.0
+  ref_line_style: "dashed"
+  dot_size: 6
+  errorbar_capsize: 4
+  errorbar_lw: 1.5
+  row_height: 0.35      # inches per row
+  left_col_width: 3.5   # inches, variable/level names
+  right_col_width: 2.0  # inches, HR (95% CI) text + p
+
+km:
+  linewidth: 1.5
+  median_linestyle: "--"
+  pval_fontsize: 8

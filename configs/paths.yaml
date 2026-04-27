@@ -1,0 +1,12 @@
+results:
+  root: "results"
+  forest: "results/forest"
+  km: "results/km"
+  agents: "results/agents"
+  hr_sensitivity: "results/hr_sensitivity"
+  clusters: "results/clusters"
+  tables: "results/tables"
+
+validation:
+  r_reference: "validation/r_reference"
+  cox_summaries: "validation/r_reference/cox_summaries.csv"

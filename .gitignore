@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# No-notebook policy (defensive)
+*.ipynb
+.ipynb_checkpoints/
+
+# OneDrive / Office lock and temp files
+~$*
+.~lock.*
+*.tmp
+desktop.ini
+
+# R artifacts (defensive)
+*.RData
+*.rData
+*.Rhistory
+.Rproj.user/
+
+# Outputs (recreated by scripts)
+results/
+validation/r_reference/*.png
+validation/r_reference/*.svg
+validation/r_reference/*.eps
+validation/r_reference/*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp

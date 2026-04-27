@@ -1,0 +1,167 @@
+﻿Model;Variable;Period;HR;LB;UP;Significance
+Oncology Phase II;Enrollment;3500 - (1990-2020);0,03;0,02;0,04;1
+Oncology Phase II;Drug Class: NME;3500 - (1990-2020);1,03;0,93;1,15;0
+Oncology Phase II;Drug Class: Non NME;3500 - (1990-2020);1,44;1,14;1,81;1
+Oncology Phase II;Biological: Yes;3500 - (1990-2020);0,69;0,6;0,79;1
+Oncology Phase II;Intervention Model: Single Group Assignment;3500 - (1990-2020);1,19;0,9;1,58;0
+Oncology Phase II;Intervention Model: Parallel Assigment;3500 - (1990-2020);1,56;1,18;2,08;1
+Oncology Phase II;Lead Agency: Other;3500 - (1990-2020);0,49;0,44;0,56;1
+Oncology Phase II;Lead Agency: NIH;3500 - (1990-2020);0,52;0,43;0,63;1
+Oncology Phase II;Enrollment;1825 - (1990-2020);0,08;0,05;0,12;1
+Oncology Phase II;Drug Class: NME;1825 - (1990-2020);0,97;0,85;1,1;0
+Oncology Phase II;Drug Class: Non NME;1825 - (1990-2020);1,33;1,03;1,71;1
+Oncology Phase II;Biological: Yes;1825 - (1990-2020);0,82;0,68;0,98;1
+Oncology Phase II;Intervention Model: Single Group Assignment;1825 - (1990-2020);0,86;0,6;1,22;0
+Oncology Phase II;Intervention Model: Parallel Assigment;1825 - (1990-2020);0,99;0,69;1,42;0
+Oncology Phase II;Lead Agency: Other;1825 - (1990-2020);0,56;0,48;0,66;1
+Oncology Phase II;Lead Agency: NIH;1825 - (1990-2020);0,56;0,43;0,73;1
+Oncology Phase II;Enrollment;3500 - (1990-2010);0,05;0,03;0,1;1
+Oncology Phase II;Drug Class: NME;3500 - (1990-2010);1,03;0,87;1,21;0
+Oncology Phase II;Drug Class: Non NME;3500 - (1990-2010);1,3;0,92;1,85;0
+Oncology Phase II;Biological: Yes;3500 - (1990-2010);0,72;0,58;0,9;1
+Oncology Phase II;Intervention Model: Single Group Assignment;3500 - (1990-2010);1,85;1,07;3,19;1
+Oncology Phase II;Intervention Model: Parallel Assigment;3500 - (1990-2010);2,58;1,49;4,47;1
+Oncology Phase II;Lead Agency: Other;3500 - (1990-2010);0,51;0,42;0,61;1
+Oncology Phase II;Lead Agency: NIH;3500 - (1990-2010);0,57;0,45;0,74;1
+Oncology Phase II;Enrollment;3500 - (2010-2020);0,03;0,02;0,05;1
+Oncology Phase II;Drug Class: NME;3500 - (2010-2020);1,07;0,93;1,22;0
+Oncology Phase II;Drug Class: Non NME;3500 - (2010-2020);1,79;1,31;2,44;1
+Oncology Phase II;Biological: Yes;3500 - (2010-2020);0,66;0,54;0,8;1
+Oncology Phase II;Intervention Model: Single Group Assignment;3500 - (2010-2020);1,04;0,74;1,44;0
+Oncology Phase II;Intervention Model: Parallel Assigment;3500 - (2010-2020);1,21;0,87;1,68;0
+Oncology Phase II;Lead Agency: Other;3500 - (2010-2020);0,49;0,42;0,58;1
+Oncology Phase II;Lead Agency: NIH;3500 - (2010-2020);0,6;0,44;0,82;1
+Oncology Phase II;Enrollment;1825 - (1990-2010);0,08;0,04;0,18;1
+Oncology Phase II;Drug Class: NME;1825 - (1990-2010);0,89;0,71;1,11;0
+Oncology Phase II;Drug Class: Non NME;1825 - (1990-2010);1,05;0,7;1,58;0
+Oncology Phase II;Biological: Yes;1825 - (1990-2010);0,74;0,54;1;0
+Oncology Phase II;Intervention Model: Single Group Assignment;1825 - (1990-2010);1,06;0,47;2,4;0
+Oncology Phase II;Intervention Model: Parallel Assigment;1825 - (1990-2010);1,5;0,66;3,4;0
+Oncology Phase II;Lead Agency: Other;1825 - (1990-2010);0,63;0,48;0,81;1
+Oncology Phase II;Lead Agency: NIH;1825 - (1990-2010);0,61;0,42;0,89;1
+Oncology Phase II;Enrollment;1825 - (2010-2020);0,09;0,05;0,16;1
+Oncology Phase II;Drug Class: NME;1825 - (2010-2020);1,03;0,88;1,21;0
+Oncology Phase II;Drug Class: Non NME;1825 - (2010-2020);1,64;1,19;2,27;1
+Oncology Phase II;Biological: Yes;1825 - (2010-2020);0,85;0,67;1,07;0
+Oncology Phase II;Intervention Model: Single Group Assignment;1825 - (2010-2020);0,87;0,58;1,29;0
+Oncology Phase II;Intervention Model: Parallel Assigment;1825 - (2010-2020);0,89;0,59;1,33;0
+Oncology Phase II;Lead Agency: Other;1825 - (2010-2020);0,54;0,45;0,66;1
+Oncology Phase II;Lead Agency: NIH;1825 - (2010-2020);0,56;0,39;0,82;1
+Oncology Phase III;Enrollment;3500 - (1990-2020);0,06;0,02;0,13;1
+Oncology Phase III;Number of Countries;3500 - (1990-2020);0,43;0,32;0,59;1
+Oncology Phase III;Drug Class: Biosimilar;3500 - (1990-2020);2,24;1,4;3,58;1
+Oncology Phase III;Drug Class: NME;3500 - (1990-2020);1,09;0,91;1,31;0
+Oncology Phase III;Drug Class: Non NME;3500 - (1990-2020);1,39;1;1,93;1
+Oncology Phase III;Lead Agency: Other;3500 - (1990-2020);0,36;0,27;0,48;1
+Oncology Phase III;Primary Purpose: Treatment;3500 - (1990-2020);0,39;0,28;0,54;1
+Oncology Phase III;Enrollment;1825 - (1990-2020);0,12;0,04;0,31;1
+Oncology Phase III;Number of Countries;1825 - (1990-2020);0,91;0,62;1,33;0
+Oncology Phase III;Drug Class: Biosimilar;1825 - (1990-2020);2,15;1,23;3,75;1
+Oncology Phase III;Drug Class: NME;1825 - (1990-2020);1,24;0,95;1,61;0
+Oncology Phase III;Drug Class: Non NME;1825 - (1990-2020);1,27;0,85;1,91;0
+Oncology Phase III;Lead Agency: Other;1825 - (1990-2020);0,86;0,56;1,32;0
+Oncology Phase III;Primary Purpose: Treatment;1825 - (1990-2020);0,3;0,2;0,44;1
+Oncology Phase III;Enrollment;3500 - (1990-2010);0,19;0,08;0,44;1
+Oncology Phase III;Number of Countries;3500 - (1990-2010);0,45;0,29;0,68;1
+Oncology Phase III;Drug Class: NME;3500 - (1990-2010);1,2;0,94;1,55;0
+Oncology Phase III;Drug Class: Non NME;3500 - (1990-2010);1,27;0,8;2,02;0
+Oncology Phase III;Lead Agency: Other;3500 - (1990-2010);0,38;0,27;0,54;1
+Oncology Phase III;Primary Purpose: Treatment;3500 - (1990-2010);0,6;0,36;1,01;0
+Oncology Phase III;Enrollment;3500 - (2010-2020);0,18;0,07;0,5;0
+Oncology Phase III;Number of Countries;3500 - (2010-2020);0,32;0,2;0,5;0
+Oncology Phase III;Drug Class: Biosimilar;3500 - (2010-2020);1,68;1,02;2,76;0
+Oncology Phase III;Drug Class: NME;3500 - (2010-2020);0,96;0,74;1,25;0
+Oncology Phase III;Drug Class: Non NME;3500 - (2010-2020);1,39;0,87;2,24;0
+Oncology Phase III;Lead Agency: Other;3500 - (2010-2020);1,1;0,63;1,93;0
+Oncology Phase III;Primary Purpose: Treatment;3500 - (2010-2020);0,23;0,15;0,36;0
+Oncology Phase III;Enrollment;1825 - (1990-2010);0,28;0,07;1,06;0
+Oncology Phase III;Number of Countries;1825 - (1990-2010);1,23;0,64;2,35;0
+Oncology Phase III;Drug Class: NME;1825 - (1990-2010);1,45;0,97;2,19;0
+Oncology Phase III;Drug Class: Non NME;1825 - (1990-2010);1,12;0,62;2,03;0
+Oncology Phase III;Lead Agency: Other;1825 - (1990-2010);0,78;0,41;1,49;0
+Oncology Phase III;Primary Purpose: Treatment;1825 - (1990-2010);0,29;0,13;0,62;1
+Oncology Phase III;Enrollment;1825 - (2010-2020);0,19;0,07;0,54;1
+Oncology Phase III;Number of Countries;1825 - (2010-2020);0,64;0,4;1,04;0
+Oncology Phase III;Drug Class: Biosimilar;1825 - (2010-2020);1,69;0,93;3,06;0
+Oncology Phase III;Drug Class: NME;1825 - (2010-2020);1,01;0,71;1,44;0
+Oncology Phase III;Drug Class: Non NME;1825 - (2010-2020);2,14;1,21;3,77;1
+Oncology Phase III;Lead Agency: Other;1825 - (2010-2020);1,16;0,64;2,1;0
+Oncology Phase III;Primary Purpose: Treatment;1825 - (2010-2020);0,31;0,19;0,48;1
+Cardiovascular Phase II;Investigator Masked: False;3500 - (1990-2020);0,56;0,42;0,76;1
+Cardiovascular Phase II;Drug Class: NME;3500 - (1990-2020);1,69;1,27;2,26;1
+Cardiovascular Phase II;Drug Class: Non NME;3500 - (1990-2020);2,26;1,41;3,63;1
+Cardiovascular Phase II;DMC:True;3500 - (1990-2020);0,74;0,58;0,94;1
+Cardiovascular Phase II;Lead Agency: Other;3500 - (1990-2020);0,46;0,31;0,7;1
+Cardiovascular Phase II;Primary Purpose: Treatment;3500 - (1990-2020);0,61;0,42;0,88;1
+Cardiovascular Phase II;Investigator Masked: False;1825 - (1990-2020);0,66;0,48;0,91;1
+Cardiovascular Phase II;Drug Class: NME;1825 - (1990-2020);1,5;1,1;2,05;1
+Cardiovascular Phase II;Drug Class: Non NME;1825 - (1990-2020);1,79;1,09;2,93;1
+Cardiovascular Phase II;DMC:True;1825 - (1990-2020);0,67;0,52;0,85;1
+Cardiovascular Phase II;Lead Agency: Other;1825 - (1990-2020);0,7;0,44;1,11;0
+Cardiovascular Phase II;Primary Purpose: Treatment;1825 - (1990-2020);0,68;0,47;0,98;1
+Cardiovascular Phase II;Investigator Masked: False;3500 - (1990-2010);0,45;0,26;0,77;1
+Cardiovascular Phase II;Drug Class: NME;3500 - (1990-2010);2,94;1,61;5,36;1
+Cardiovascular Phase II;Drug Class: Non NME;3500 - (1990-2010);6,08;1,62;22,89;1
+Cardiovascular Phase II;DMC:True;3500 - (1990-2010);1,06;0,69;1,64;0
+Cardiovascular Phase II;Lead Agency: Other;3500 - (1990-2010);0,4;0,15;1,08;0
+Cardiovascular Phase II;Primary Purpose: Treatment;3500 - (1990-2010);0,5;0,27;0,94;1
+Cardiovascular Phase II;Investigator Masked: False;3500 - (2010-2020);0,6;0,42;0,88;1
+Cardiovascular Phase II;Drug Class: NME;3500 - (2010-2020);1,58;1,13;2,21;1
+Cardiovascular Phase II;Drug Class: Non NME;3500 - (2010-2020);1,74;1,03;2,91;1
+Cardiovascular Phase II;DMC:True;3500 - (2010-2020);0,65;0,49;0,87;1
+Cardiovascular Phase II;Lead Agency: Other;3500 - (2010-2020);0,43;0,26;0,68;1
+Cardiovascular Phase II;Primary Purpose: Treatment;3500 - (2010-2020);0,64;0,4;1,02;0
+Cardiovascular Phase II;Investigator Masked: False;1825 - (1990-2010);0,5;0,28;0,91;1
+Cardiovascular Phase II;Drug Class: NME;1825 - (1990-2010);2,44;1,26;4,76;1
+Cardiovascular Phase II;Drug Class: Non NME;1825 - (1990-2010);4,06;0,87;18,97;0
+Cardiovascular Phase II;DMC:True;1825 - (1990-2010);1,03;0,66;1,61;0
+Cardiovascular Phase II;Lead Agency: Other;1825 - (1990-2010);0,5;0,12;2,14;0
+Cardiovascular Phase II;Primary Purpose: Treatment;1825 - (1990-2010);0,53;0,28;1;0
+Cardiovascular Phase II;Investigator Masked: False;1825 - (2010-2020);0,73;0,49;1,09;0
+Cardiovascular Phase II;Drug Class: NME;1825 - (2010-2020);1,55;1,07;2,25;1
+Cardiovascular Phase II;Drug Class: Non NME;1825 - (2010-2020);1,5;0,87;2,58;0
+Cardiovascular Phase II;DMC:True;1825 - (2010-2020);0,55;0,4;0,74;1
+Cardiovascular Phase II;Lead Agency: Other;1825 - (2010-2020);0,72;0,43;1,21;0
+Cardiovascular Phase II;Primary Purpose: Treatment;1825 - (2010-2020);0,73;0,46;1,17;0
+Cardiovascular Phase III;Enrollment;3500 - (1990-2020);0,15;0,09;0,26;1
+Cardiovascular Phase III;Number of Arms: More than Three;3500 - (1990-2020);1,73;1,27;2,36;1
+Cardiovascular Phase III;Drug Class: NME;3500 - (1990-2020);1,08;0,81;1,45;0
+Cardiovascular Phase III;Drug Class: Non NME;3500 - (1990-2020);1,74;1,23;2,46;1
+Cardiovascular Phase III;Lead Agency: Other;3500 - (1990-2020);0,35;0,22;0,56;1
+Cardiovascular Phase III;US/International: Both;3500 - (1990-2020);0,63;0,46;0,88;1
+Cardiovascular Phase III;US/International: International;3500 - (1990-2020);1,3;0,92;1,83;0
+Cardiovascular Phase III;Enrollment;1825 - (1990-2020);0,14;0,07;0,25;1
+Cardiovascular Phase III;Number of Arms: More than Three;1825 - (1990-2020);1,43;1,04;1,96;1
+Cardiovascular Phase III;Drug Class: NME;1825 - (1990-2020);1,12;0,82;1,52;0
+Cardiovascular Phase III;Drug Class: Non NME;1825 - (1990-2020);2,28;1,58;3,28;1
+Cardiovascular Phase III;Lead Agency: Other;1825 - (1990-2020);0,3;0,18;0,5;1
+Cardiovascular Phase III;US/International: Both;1825 - (1990-2020);0,53;0,38;0,75;1
+Cardiovascular Phase III;US/International: International;1825 - (1990-2020);1,01;0,72;1,43;0
+Cardiovascular Phase III;Enrollment;3500 - (1990-2010);0,28;0,14;0,55;1
+Cardiovascular Phase III;Number of Arms: More than Three;3500 - (1990-2010);1,91;1,16;3,15;1
+Cardiovascular Phase III;Drug Class: NME;3500 - (1990-2010);1,53;0,71;3,26;0
+Cardiovascular Phase III;Drug Class: Non NME;3500 - (1990-2010);2,44;1,05;5,66;1
+Cardiovascular Phase III;Lead Agency: Other;3500 - (1990-2010);0,41;0,2;0,85;1
+Cardiovascular Phase III;US/International: Both;3500 - (1990-2010);0,77;0,48;1,22;0
+Cardiovascular Phase III;US/International: International;3500 - (1990-2010);1,47;0,82;2,64;0
+Cardiovascular Phase III;Enrollment;3500 - (2010-2020);0,12;0,05;0,26;1
+Cardiovascular Phase III;Number of Arms: More than Three;3500 - (2010-2020);1,46;0,97;2,21;0
+Cardiovascular Phase III;Drug Class: NME;3500 - (2010-2020);1,12;0,79;1,59;0
+Cardiovascular Phase III;Drug Class: Non NME;3500 - (2010-2020);1,87;1,22;2,87;1
+Cardiovascular Phase III;Lead Agency: Other;3500 - (2010-2020);0,27;0,14;0,53;1
+Cardiovascular Phase III;US/International: Both;3500 - (2010-2020);0,41;0,25;0,68;1
+Cardiovascular Phase III;US/International: International;3500 - (2010-2020);0,85;0,53;1,37;0
+Cardiovascular Phase III;Enrollment;1825 - (1990-2010);0,26;0,11;0,6;1
+Cardiovascular Phase III;Number of Arms: More than Three;1825 - (1990-2010);1,46;0,87;2,43;0
+Cardiovascular Phase III;Drug Class: NME;1825 - (1990-2010);2,17;0,9;5,21;0
+Cardiovascular Phase III;Drug Class: Non NME;1825 - (1990-2010);4,31;1,7;10,92;1
+Cardiovascular Phase III;Lead Agency: Other;1825 - (1990-2010);0,36;0,13;1;0
+Cardiovascular Phase III;US/International: Both;1825 - (1990-2010);0,51;0,32;0,83;1
+Cardiovascular Phase III;US/International: International;1825 - (1990-2010);1,28;0,68;2,42;0
+Cardiovascular Phase III;Enrollment;1825 - (2010-2020);0,1;0,04;0,23;1
+Cardiovascular Phase III;Number of Arms: More than Three;1825 - (2010-2020);1,33;0,87;2,02;0
+Cardiovascular Phase III;Drug Class: NME;1825 - (2010-2020);1,11;0,78;1,59;0
+Cardiovascular Phase III;Drug Class: Non NME;1825 - (2010-2020);2,62;1,63;4,19;1
+Cardiovascular Phase III;Lead Agency: Other;1825 - (2010-2020);0,23;0,12;0,45;1
+Cardiovascular Phase III;US/International: Both;1825 - (2010-2020);0,53;0,32;0,88;1
+Cardiovascular Phase III;US/International: International;1825 - (2010-2020);0,79;0,49;1,29;0

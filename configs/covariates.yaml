@@ -1,0 +1,379 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Survival Analysis — Covariate & Model Configuration
+#
+# Ported from: sensibility_analysis.R (canonical R source)
+# Input CSV:   survival_data_complemented.csv (post-log-transform snapshot)
+#
+# NOTE: enrollment, n_countries, n_collaborator are already log-transformed
+#       in the CSV. Do NOT re-apply log to these columns.
+# ─────────────────────────────────────────────────────────────────────────────
+
+input:
+  csv: "data/raw/survival_data_complemented.csv"
+  hr_sensitivity_csv: "data/raw/hr_sensibility.csv"
+
+global:
+  duration_col: duration
+  event_col: event          # synthesized column (all 1s) — trials pre-filtered to Completed
+  pre_logged_columns:       # already on log scale — do not re-log
+    - enrollment
+    - n_countries
+    - n_collaborator
+
+  # ── Global level renames applied to the full dataset after loading ─────────
+  # Ported from sensibility_analysis.R L322-387
+  level_renames:
+    has_dmc:
+      "NA":    "False"
+      "FALSE": "False"
+      "TRUE":  "True"
+    us_international:
+      "USA":           "U.S.A. only"
+      "International": "International only"
+    lead_agency:
+      "U.S. Fed": "Other"
+    Fast_Track:
+      "N": "No"
+      "Y": "Yes"
+    QIDP:
+      "N": "No"
+      "Y": "Yes"
+    Orphan:
+      "N": "No"
+      "Y": "Yes"
+    Breakthrough:
+      "N": "No"
+      "Y": "Yes"
+    RMAT:
+      "N": "No"
+      "Y": "Yes"
+    allocation:
+      __keep_only__: "Randomized"   # all others → "Other"
+    primary_purpose:
+      __keep_only__: "Treatment"    # all others → "Not Treatment"
+    Drug_Class:
+      "Biosimilar": "Biologic"
+    n_primary_endpoint:
+      __bin__:
+        ">4":  ">4"
+        "1-3": "1-3"
+        threshold: 4          # >4 → ">4", else → "1-3"
+    n_secondary_endpoint:
+      __bin_ordered__:
+        ">20":  20            # >20
+        "14-20": 14           # 14..20
+        "8-13":  8            # 8..13
+        "3-7":   3            # 3..7
+        "1-2":   1            # 1..2
+
+  masking_order:
+    - "None"
+    - "Single"
+    - "Double"
+    - "Triple or quadruple"
+
+  masking_renames:
+    "NA":          "None"
+    "Triple":      "Triple or quadruple"
+    "Quadruple":   "Triple or quadruple"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Per-model configurations
+# ─────────────────────────────────────────────────────────────────────────────
+models:
+
+  # ── Oncology Phase 2 ──────────────────────────────────────────────────────
+  oncology_phase2:
+    label: "Oncology Phase 2"
+    filter:
+      phase:         "Phase 2"
+      Disease_Group: "Oncology"
+    filter_out:                      # exclude these values
+      intervention_type: ["Other"]
+      n_secondary_endpoint: [">20"]
+    drop_cols:
+      - nct_id
+      - phase
+      - Disease_Group
+      - Other
+      - RMAT
+      - QIDP
+      - SPA
+      - n_primary_endpoint
+    level_collapses:
+      intervention_model:
+        __keep_only__: null          # collapse non-standard → "Other"
+        other_values:
+          - "Crossover Assignment"
+          - "Sequential Assignment"
+          - "Factorial Assignment"
+          - "NA"
+    univariate_p_threshold: 0.1
+    bw_subset_drop:
+      - "masked"       # drops all columns containing "masked"
+      - primary_purpose
+    final_covariates:
+      enrollment:    "Enrollment"
+      Drug_Class:    "FDA classification"
+      lead_agency:   "Lead agency"
+    forest:
+      filename: "ggforest_O_P2"
+      height: 4
+      width: 6
+      fontsize: 0.7
+
+  # ── Oncology Phase 3 ──────────────────────────────────────────────────────
+  oncology_phase3:
+    label: "Oncology Phase 3"
+    filter:
+      phase:         "Phase 3"
+      Disease_Group: "Oncology"
+    filter_out: {}
+    drop_cols:
+      - nct_id
+      - phase
+      - Disease_Group
+      - number_of_arms
+      - Other
+      - RMAT
+      - QIDP
+      - n_primary_endpoint
+      - n_secondary_endpoint
+      - outcomes_assessor_masked
+    level_collapses:
+      intervention_model:
+        __keep_only__: "Single Group Assignment"
+      intervention_type:
+        __keep_only__: "Drug"
+      Therapy:
+        __keep_only__: "Monotherapy"
+    univariate_p_threshold: 0.1
+    bw_subset_drop:
+      - "masked"
+      - primary_purpose
+    final_covariates:
+      enrollment:       "Enrollment"
+      Drug_Class:       "FDA classification"
+      masking:          "Masking"
+      us_international: "U.S./International"
+    forest:
+      filename: "ggforest_O_P3"
+      height: 4
+      width: 6
+      fontsize: 0.6
+
+  # ── Infectious Disease Phase 2 ────────────────────────────────────────────
+  infectious_phase2:
+    label: "Infectious Disease Phase 2"
+    filter:
+      phase:         "Phase 2"
+      Disease_Group: "Infectious Disease"
+    filter_out: {}
+    drop_cols:
+      - nct_id
+      - RMAT
+      - phase
+      - Disease_Group
+      - Other
+      - Pivotal
+      - SPA
+      - n_primary_endpoint
+    level_collapses:
+      intervention_model:
+        __keep_only__: "Parallel Assignment"
+      lead_agency:
+        __keep_only__: "Industry"
+      n_secondary_endpoint:
+        __keep_set__: ["1-2", "3-7", "8-13"]    # rest → "Other"
+    univariate_p_threshold: 0.1
+    bw_subset_drop:
+      - "masked"
+    final_covariates:
+      has_dmc:     "Has DMC"
+      allocation:  "Allocation"
+      n_countries: "Number of countries"
+      Orphan:      "Orphan"
+      QIDP:        "QIDP"
+    forest:
+      filename: "ggforest_ID_P2"
+      height: 5
+      width: 6
+      fontsize: 0.7
+
+  # ── Infectious Disease Phase 3 ────────────────────────────────────────────
+  infectious_phase3:
+    label: "Infectious Disease Phase 3"
+    filter:
+      phase:         "Phase 3"
+      Disease_Group: "Infectious Disease"
+    filter_out:
+      intervention_model: ["NA"]
+    drop_cols:
+      - nct_id
+      - phase
+      - Disease_Group
+      - Other
+      - RMAT
+      - n_primary_endpoint
+    level_collapses:
+      lead_agency:
+        other_values: ["NIH"]       # NIH → "Other" (keep Industry, Other)
+      intervention_type:
+        other_values: ["Multi-intervention"]
+      n_secondary_endpoint:
+        __keep_set__: ["1-2", "3-7", "8-13"]
+        other_label: ">13"
+    univariate_p_threshold: 0.1
+    bw_subset_drop:
+      - "masked"
+      - primary_purpose
+    final_covariates:
+      n_countries:       "Number of countries"
+      lead_agency:       "Lead agency"
+      intervention_type: "Intervention type"
+      Breakthrough:      "Breakthrough"
+    forest:
+      filename: "ggforest_ID_P3"
+      height: 5
+      width: 10
+      fontsize: 0.7
+
+  # ── Cardiovascular Phase 2 ────────────────────────────────────────────────
+  # Ported from R commented block (sensibility_analysis.R L~1404-1506).
+  # NOTE: "Cardiovascular" trials may be sparse in the current CSV snapshot.
+  cardiovascular_phase2:
+    label: "Cardiovascular Phase 2"
+    filter:
+      phase:         "Phase 2"
+      Disease_Group: "Cardiovascular"
+    filter_out: {}
+    drop_cols:
+      - nct_id
+      - phase
+      - Disease_Group
+      - Other
+      - Breakthrough
+      - RMAT
+      - QIDP
+    level_collapses:
+      has_dmc:
+        __keep_only__: "True"
+      allocation:
+        __keep_only__: "Randomized"
+      intervention_model:
+        __keep_only__: "Parallel Assignment"
+      lead_agency:
+        __keep_only__: "Industry"
+    univariate_p_threshold: 0.1
+    bw_subset_drop:
+      - "masked"
+    final_covariates:
+      number_of_arms: "Number of arms"
+      has_dmc:        "Has DMC"
+    forest:
+      filename: "ggforest_C_P2"
+      height: 4
+      width: 10
+      fontsize: 0.7
+
+  # ── Cardiovascular Phase 3 ────────────────────────────────────────────────
+  # Ported from R commented block (sensibility_analysis.R L~1547-1700).
+  cardiovascular_phase3:
+    label: "Cardiovascular Phase 3"
+    filter:
+      phase:         "Phase 3"
+      Disease_Group: "Cardiovascular"
+    filter_out: {}
+    drop_cols:
+      - nct_id
+      - phase
+      - Disease_Group
+      - Other
+      - Breakthrough
+      - RMAT
+      - QIDP
+    level_collapses:
+      has_dmc:
+        __keep_only__: "True"
+      allocation:
+        __keep_only__: "Randomized"
+      intervention_model:
+        __keep_only__: "Parallel Assignment"
+    univariate_p_threshold: 0.1
+    bw_subset_drop:
+      - "masked"
+    final_covariates:
+      n_countries:       "Number of Countries"
+      has_dmc:           "Has DMC"
+      intervention_type: "Intervention type"
+    forest:
+      filename: "ggforest_C_P3"
+      height: 5
+      width: 10
+      fontsize: 0.7
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Kaplan-Meier stratification variables
+# ─────────────────────────────────────────────────────────────────────────────
+km:
+  stratifications:
+    - col: "Disease_Group_2"       # derived: Oncology / Infectious Disease / Other
+      filename: "km_disease_group"
+      save_svg: true
+    - col: "us_international"
+      filename: "km_us_international"
+      save_svg: true
+    - col: "has_dmc"
+      filename: "km_has_dmc"
+      save_svg: true
+    - col: "masking"
+      filename: "km_masking"
+      save_svg: true
+    - col: "lead_agency"
+      filename: "km_lead_agency"
+      save_svg: true
+
+  industry_stratifications:        # filtered to lead_agency == "Industry"
+    - col: "has_dmc"
+      filename: "km_has_dmc_industry"
+    - col: "masking"
+      filename: "km_masking_industry"
+    - col: "us_international"
+      filename: "km_us_international_industry"
+    - col: "lead_agency"
+      filename: "km_lead_agency_industry"
+
+  fig_width_cm: 12
+  fig_height_cm: 10
+  pval_coord_x: 1500
+  pval_coord_y: 0.55
+  legend_loc: [0.78, 0.78]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# HR Sensitivity analysis
+# ─────────────────────────────────────────────────────────────────────────────
+hr_sensitivity:
+  period_order:
+    - "10 years (2010-2020)"
+    - "10 years (1990-2010)"
+    - "10 years (1990-2020)"
+    - "5 years (2010-2020)"
+    - "5 years (1990-2010)"
+    - "5 years (1990-2020)"
+
+  period_renames:
+    "1825 - (1990-2010)": "5 years (1990-2010)"
+    "1825 - (1990-2020)": "5 years (1990-2020)"
+    "1825 - (2010-2020)": "5 years (2010-2020)"
+    "3500 - (1990-2010)": "10 years (1990-2010)"
+    "3500 - (1990-2020)": "10 years (1990-2020)"
+    "3500 - (2010-2020)": "10 years (2010-2020)"
+
+  # 4-year panel = models with 5-year time window
+  four_year_models:
+    - "Oncology Phase II"
+    - "Oncology Phase III"
+    - "Cardiovascular Phase II"
+    - "Cardiovascular Phase III"
+
+  ncols: 2
