@@ -23,22 +23,16 @@ def _prep_for_lifelines(
     """Expand categorical/string columns to dummies (treatment contrasts, drop_first).
 
     Lifelines without a formula expects all-numeric input.
-    Numeric and boolean columns pass through unchanged.
+    Numeric columns pass through unchanged.
     Duration and event columns are never dummified.
     """
     protect = {duration_col, event_col}
-    cat_cols = [
+    str_cat_cols = [
         c for c in df.columns
-        if c not in protect and (str(df[c].dtype) in ("category", "object") or df[c].dtype == bool)
+        if c not in protect and str(df[c].dtype) in ("category", "object")
     ]
-    bool_cols = [c for c in cat_cols if df[c].dtype == bool]
-    str_cat_cols = [c for c in cat_cols if c not in bool_cols]
 
     out = df.copy()
-    # Bool -> int (0/1): no dummies needed
-    for c in bool_cols:
-        out[c] = out[c].astype(int)
-
     if str_cat_cols:
         dummies = pd.get_dummies(out[str_cat_cols], drop_first=True)
         out = out.drop(columns=str_cat_cols)

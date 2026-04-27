@@ -22,8 +22,8 @@ AGENT_COLS = {
     "outcomes_assessor_masked":"Outcome_assessor",
 }
 
-BOOL_MAP = {"TRUE": True, "FALSE": False, "True": True, "False": False,
-            "1": True, "0": False, True: True, False: False}
+BOOL_MAP = {"TRUE": True, "FALSE": False, "1": True, "0": False,
+            True: True, False: False}
 
 
 def _to_bool(series: pd.Series) -> pd.Series:
